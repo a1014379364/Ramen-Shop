@@ -12,19 +12,23 @@ export default class RamenShop {
 
     // Debug
     if (this.debug.active) {
-      // this.debugFolder = this.debug.ui.addFolder('ramenShop')
+      this.debugFolder = this.debug.ui.addFolder("ramenShop");
     }
 
     // Resource
-    this.resource = this.resources.items.ramenShopModel;
+    this.resource = this.resources.items.ramenShopModel; // 获取静态资源
 
     this.parseModel();
     this.addObjects();
     this.setMaterials();
   }
 
+  /**
+   * 解析加载进来的三维模型
+   */
   parseModel() {
     this.model = this.resource.scene;
+    console.log("Chen 看一下静态加载进来了什么模型资源", this.model);
 
     // Objects
     this.ramenShop = this.model.children.find(

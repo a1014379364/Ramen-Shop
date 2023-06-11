@@ -46,16 +46,17 @@ export default class Experience {
 
     // Setup
     this.debug = new Debug(); // 初始化调试类
-    this.scene = new THREE.Scene();
-    this.sizes = new Sizes();
+    this.scene = new THREE.Scene(); // 初始化整个三维场景，场景容器
+    this.sizes = new Sizes(); // 和视口变化关的管理类
 
+    // 简易地获取当前设备是纵向还是横向
     if (this.sizes.width / this.sizes.height > 1) {
       this.config.vertical = false;
     } else {
       this.config.vertical = true;
     }
 
-    this.time = new Time();
+    this.time = new Time(); // 启动时钟，开始每帧触发一次 tick
     this.camera = new Camera();
     this.renderer = new Renderer();
     this.sounds = new Sounds();
