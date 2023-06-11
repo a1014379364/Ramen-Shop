@@ -1,7 +1,8 @@
 const path = require("path");
 const { merge } = require("webpack-merge");
 const commonConfiguration = require("./webpack.common.js");
-const ip = require("internal-ip"); // 它可以返回本地设备所分配的所有网络接口的IPv4和IPv6地址
+// const ip = require("internal-ip"); // 它可以返回本地设备所分配的所有网络接口的IPv4和IPv6地址
+// const ip = require("ip"); // 上面的这个internal-ip有问题，本来想找一个平替的，结果还是有问题，先注释处理 ??
 const portFinderSync = require("portfinder-sync"); // 为Web服务器或其他需要使用特定端口的应用程序分配随机可用端口
 
 const infoColor = (_message) => {
@@ -28,15 +29,15 @@ module.exports = merge(commonConfiguration, {
       overlay: true,
       progress: false,
     },
-    onAfterSetupMiddleware: function (devServer) {
+    onAfterSetupMiddleware: async function (devServer) {
       const port = devServer.options.port;
       const https = devServer.options.https ? "s" : "";
-      const localIp = ip.v4.sync();
-      const domain1 = `http${https}://${localIp}:${port}`;
+      // const localIp = await ip.address("ipv4");
+      // const domain1 = `http${https}://${localIp}:${port}`;
       const domain2 = `http${https}://localhost:${port}`;
 
       console.log(
-        `Project running at:\n  - ${infoColor(domain1)}\n  - ${infoColor(
+        `Project running at:\n  - ${infoColor(
           domain2
         )}`
       );
