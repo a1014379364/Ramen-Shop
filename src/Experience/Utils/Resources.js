@@ -1,3 +1,6 @@
+/**
+ * 静态资源加载工具类
+ */
 import * as THREE from "three";
 import Experience from "../Experience.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
@@ -12,23 +15,26 @@ export default class Resources extends EventEmitter {
 
     this.experience = new Experience();
     this.sources = sources;
-    this.renderer = this.experience.renderer.instance;
+    this.renderer = this.experience.renderer.instance; // 获取渲染器实例
 
     this.items = {};
-    this.toLoad = this.sources.length;
-    this.loaded = 0;
+    this.toLoad = this.sources.length; // 待加载列表
+    this.loaded = 0; // 目前已加载数目
 
-    this.video = {};
-    this.videoTexture = {};
-    this.mychromavideotexturematerial = {};
+    this.video = {}; // ??
+    this.videoTexture = {}; // ??
+    this.mychromavideotexturematerial = {}; // ??
 
-    this.carousel1 = [];
-    this.carousel2 = [];
+    this.carousel1 = []; // ??
+    this.carousel2 = []; // ??
 
     this.setLoaders();
     this.startLoading();
   }
 
+  /**
+   * 设置加载器
+   */
   setLoaders() {
     this.loaders = {};
     this.loaders.dracoLoader = new DRACOLoader();
@@ -40,13 +46,16 @@ export default class Resources extends EventEmitter {
 
     this.loaders.basisTextureLoader = new BasisTextureLoader();
     this.loaders.basisTextureLoader.setTranscoderPath("/basis/");
-    this.loaders.basisTextureLoader.detectSupport(this.renderer);
+    this.loaders.basisTextureLoader.detectSupport(this.renderer); // 检测硬件对可用压缩纹理格式的支持，以确定代码转换器的输出格式。必须在加载纹理之前调用。
 
     this.loaders.KTX2TextureLoader = new KTX2Loader();
     this.loaders.KTX2TextureLoader.setTranscoderPath("/basis/");
-    this.loaders.KTX2TextureLoader.detectSupport(this.renderer);
+    this.loaders.KTX2TextureLoader.detectSupport(this.renderer); // 检测硬件对可用压缩纹理格式的支持，以确定代码转换器的输出格式。必须在加载纹理之前调用。
   }
 
+  /**
+   * 启动加载
+   */
   startLoading() {
     // Load each source
     for (const source of this.sources) {
@@ -109,12 +118,18 @@ export default class Resources extends EventEmitter {
     }
   }
 
+  /**
+   * 资源加载成功后的回调事件
+   * @param {Object} source 对应资源对象
+   * @param {Object} file 资源加载成功回调传参
+   */
   sourceLoaded(source, file) {
     this.trigger("itemLoaded");
 
     this.items[source.name] = file;
     this.loaded++;
 
+    // 等资源加载数等于已加载数既加载完毕, 触发ready事件
     if (this.loaded === this.toLoad) {
       this.trigger("ready");
     }

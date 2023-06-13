@@ -16,7 +16,7 @@ export default class RamenShop {
     }
 
     // Resource
-    this.resource = this.resources.items.ramenShopModel; // 获取静态资源
+    this.resource = this.resources.items.ramenShopModel; // 获取整一个包括路灯在内的拉面馆模型
 
     this.parseModel();
     this.addObjects();

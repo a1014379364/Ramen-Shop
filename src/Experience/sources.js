@@ -1,6 +1,7 @@
 export default [
   // Models
   {
+    // 整一个拉面馆模型，包括路灯在内
     name: "ramenShopModel",
     type: "gltfModel",
     path: "models/ramenShop/glTF/ramenShop.gltf",

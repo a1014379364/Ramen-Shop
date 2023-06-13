@@ -59,7 +59,7 @@ export default class Experience {
     this.time = new Time(); // 启动时钟，开始每帧触发一次 tick
     this.camera = new Camera();
     this.renderer = new Renderer();
-    this.sounds = new Sounds();
+    this.sounds = new Sounds(); // 尝试单独注释这里的音效模块，发现程序没法正常控制，证明还是耦合了别的逻辑 有待优化 ??
     this.resources = new Resources(sources);
     this.performance = new Performance();
     this.preLoader = new PreLoader();
